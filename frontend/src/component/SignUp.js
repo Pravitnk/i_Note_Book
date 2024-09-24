@@ -12,7 +12,7 @@ const SignUp = (props) => {
     e.preventDefault();
     //api call
     const { name, email, password, cPassword } = credentials // takes this all element out if credentials
-    const response = await fetch('http://localhost:5000/api/auth/createuser', {
+    const response = await fetch('https://i-note-book-backend.onrender.com/api/auth/createuser', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
