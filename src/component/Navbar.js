@@ -20,7 +20,16 @@ export default function Navbar(props) {
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
-            iNoteBook
+            <span
+              style={{
+                fontSize: "1.5rem",
+                fontWeight: "bolder",
+                fontFamily: "sans-serif",
+                color: "rgb(216, 87, 255)",
+              }}
+            >
+              iNoteBook
+            </span>
           </Link>
           <button
             className="navbar-toggler"

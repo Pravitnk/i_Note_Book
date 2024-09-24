@@ -99,27 +99,23 @@ const AppContent = ({ showAlert, alert }) => {
         <Alert alert={alert} />
         {/* Conditionally render Header */}
         {location.pathname !== "/" && <Header />}
-        <div className="container">
-          <Routes>
-            <Route exact path="/" element={<Home />} />
-            <Route
-              exact
-              path="/notes"
-              element={<Note showAlert={showAlert} />}
-            />
-            <Route exact path="/about" element={<About />} />
-            <Route
-              exact
-              path="/login"
-              element={<Login showAlert={showAlert} />}
-            />
-            <Route
-              exact
-              path="/signup"
-              element={<SignUp showAlert={showAlert} />}
-            />
-          </Routes>
-        </div>
+        {/* <div className="container"> */}
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route exact path="/notes" element={<Note showAlert={showAlert} />} />
+          <Route exact path="/about" element={<About />} />
+          <Route
+            exact
+            path="/login"
+            element={<Login showAlert={showAlert} />}
+          />
+          <Route
+            exact
+            path="/signup"
+            element={<SignUp showAlert={showAlert} />}
+          />
+        </Routes>
+        {/* </div> */}
       </div>
     </>
   );

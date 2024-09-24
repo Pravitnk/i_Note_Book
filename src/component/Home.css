@@ -9,12 +9,12 @@
   background-size: 200% 200%;
   animation: gradientAnimation 10s ease infinite;
   padding: 20px;
-  opacity: 0.9;
 }
 
 .home-content {
   text-align: center;
   padding: 40px;
+
   background-color: #f5f7fa;
   border-radius: 15px;
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
