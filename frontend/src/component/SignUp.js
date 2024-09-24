@@ -1,75 +1,137 @@
-import React, { useState } from 'react'
-import { useNavigate} from 'react-router-dom';
-// useNavigate hook is use to redirect client to the Homepage
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = (props) => {
-  // const host = "http://localhost:5000";
-  const [credentials, setCredentials] = useState({ name: '', email: '', password: '', cPassword: '' })
-  let history = useNavigate();
+  const [credentials, setCredentials] = useState({
+    name: "",
+    email: "",
+    password: "",
+    cPassword: "",
+  });
+  let navigate = useNavigate();
 
-  //funcuin to submit the form 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //api call
-    const { name, email, password, cPassword } = credentials // takes this all element out if credentials
-    const response = await fetch('https://i-note-book-backend.onrender.com/api/auth/createuser', {
-      method: 'POST',
+    const { name, email, password, cPassword } = credentials;
+
+    if (password !== cPassword) {
+      props.showAlert("Passwords do not match", "danger");
+      return;
+    }
+
+     const response = await fetch('https://i-note-book-backend.onrender.com/api/auth/createuser', {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name, email, password, cPassword })
+      body: JSON.stringify({ name, email, password }),
     });
+
     const json = await response.json();
     console.log(json);
+
     if (json.success) {
-      //save the auth token and redirect
-      localStorage.setItem('token', json.authtoken); //->save the authtoken in a localstorage
-      props.showAlert('account created successfully please Login ', 'success');
-      history("/login");
+      localStorage.setItem("token", json.authtoken);
+      props.showAlert(
+        "Account created successfully! Please log in.",
+        "success"
+      );
+      navigate("/login");
+    } else {
+      props.showAlert("Invalid Credentials", "danger");
     }
-    else {
-      props.showAlert('Invalid Credentials ', 'danger');
-    }
-  }
+  };
 
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
-  }
-
+  };
 
   return (
-    <div className='container item-center'>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3 row">
-          <label htmlFor="name" className="col-sm-2 col-form-label"><h4>Name</h4></label>
-          <div className="col-sm-5">
-            <input type="text" className="form-control" id="name" name='name' onChange={onChange} placeholder='Enter your Full Name' />
-          </div>
+    <div className="d-flex justify-content-center align-items-center vh-100">
+      <div
+        className="card shadow p-4"
+        style={{
+          maxWidth: "800px",
+          width: "100%",
+          position: "relative",
+          top: "-15%",
+        }}
+      >
+        <div className="card-body">
+          <h3 className="card-title text-center mb-4">Sign Up</h3>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <label htmlFor="name" className="form-label">
+                Name
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="name"
+                name="name"
+                value={credentials.name}
+                onChange={onChange}
+                placeholder="Enter your Full Name"
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="email" className="form-label">
+                Email
+              </label>
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                name="email"
+                value={credentials.email}
+                onChange={onChange}
+                placeholder="Enter your Email"
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="password" className="form-label">
+                Password
+              </label>
+              <input
+                type="password"
+                className="form-control"
+                id="password"
+                name="password"
+                value={credentials.password}
+                onChange={onChange}
+                minLength={5}
+                placeholder="Enter your Password"
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="cPassword" className="form-label">
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                className="form-control"
+                id="cPassword"
+                name="cPassword"
+                value={credentials.cPassword}
+                onChange={onChange}
+                minLength={5}
+                placeholder="Confirm Password"
+                required
+              />
+            </div>
+            <div className="d-grid">
+              <button type="submit" className="btn btn-primary">
+                Sign Up
+              </button>
+            </div>
+          </form>
         </div>
-        <div className="mb-3 row">
-          <label htmlFor="email" className="col-sm-2 col-form-label"><h4>Email</h4></label>
-          <div className="col-sm-5">
-            <input type="email" className="form-control" id="email" name='email' onChange={onChange} placeholder='Enter your Email' />
-          </div>
-        </div>
-        <div className="mb-3 row">
-          <label htmlFor="password" className="col-sm-2 col-form-label"><h4>Password</h4></label>
-          <div className="col-sm-5">
-            <input type="password" className="form-control" id="password" name='password' onChange={onChange} minLength={5} required placeholder='Enter your Password' />
-          </div>
-        </div>
-        <div className="mb-3 row">
-          <label htmlFor="cPassword" className="col-sm-2 col-form-label"><h4> Confirm Password</h4></label>
-          <div className="col-sm-5">
-            <input type="password" className="form-control" id="cPassword" name='cPassword' onChange={onChange} minLength={5} required placeholder='Confirm Password' />
-          </div>
-        </div>
-        <div className="col-auto">
-          <button type="submit" className="btn btn-primary">SingUp</button>
-        </div>
-      </form>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default SignUp
+export default SignUp;
