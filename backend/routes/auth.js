@@ -61,7 +61,9 @@ router.post(
       res.json({ success, authtoken });
     } catch (error) {
       console.log(error.message);
-      res.status(500).send("some error occured");
+      return res
+        .status(500)
+        .json({ success: false, error: "Some error occurred" });
     }
   }
 );
@@ -109,8 +111,9 @@ router.post(
       res.json({ success, authtoken });
     } catch (error) {
       console.log(error.message);
-      res.status(500).send("some error occured");
-    }
+return res
+        .status(400)
+        .json({ success: false, error: "Invalid credentials" });    }
   }
 );
 
