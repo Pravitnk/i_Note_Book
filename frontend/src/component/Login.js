@@ -32,6 +32,7 @@ const Login = (props) => {
     // If login is successful
     if (json.success) {
       localStorage.setItem("token", json.authtoken);
+      localStorage.setItem("userName", json.user.name);
       props.showAlert("Logged in successfully", "success");
       history("/notes");
     } else {
