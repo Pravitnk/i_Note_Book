@@ -6,7 +6,19 @@ const AddNote = (props) => {
   const { addNote } = context;
 
   const [note, setNote] = useState({ title: "", description: "", tag: "" });
-  //fumction on onclick
+   const [userName, setUserName] = useState(""); // New state to store the user's name
+
+  // Use useEffect to get the user's name from localStorage
+  useEffect(() => {
+    const storedUserName = localStorage.getItem("userName");
+    if (storedUserName) {
+      setUserName(storedUserName);
+    } else {
+      console.error("No user name found in localStorage"); // Log if not found
+    }
+  }, []);
+
+  // Function to handle form submission
   const handleclick = (e) => {
     e.preventDefault();
     addNote(note.title, note.description, note.tag);
@@ -20,7 +32,7 @@ const AddNote = (props) => {
 
   return (
     <div className="container">
-      <h2>Add a note</h2>
+      <h2> Add a note {userName && ` ${userName}`}</h2>
       <div className="form">
         <div className="mb-3 row">
           <label htmlFor="title" className="col-sm-2 col-form-label">
