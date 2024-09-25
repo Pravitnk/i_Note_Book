@@ -7,8 +7,10 @@ const Login = (props) => {
   let history = useNavigate();
 
   // Function to submit the form
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
     const response = await fetch(`${host}/api/auth/login`, {
       method: "POST",
       headers: {
@@ -19,15 +21,30 @@ const Login = (props) => {
         password: credentials.password,
       }),
     });
+
+    // Check if response status is OK (status code 200-299)
+    if (!response.ok) {
+      throw new Error("Failed to login, please check your credentials.");
+    }
+
     const json = await response.json();
+
+    // If login is successful
     if (json.success) {
       localStorage.setItem("token", json.authtoken);
       props.showAlert("Logged in successfully", "success");
       history("/notes");
     } else {
+      // Show error alert if credentials are incorrect
       props.showAlert("Invalid Credentials", "danger");
     }
-  };
+  } catch (error) {
+    // Catch network or unexpected errors and handle gracefully
+    console.error("Error:", error.message);
+    props.showAlert(error.message, "danger");
+  }
+};
+
 
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
