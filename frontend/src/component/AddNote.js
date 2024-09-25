@@ -33,7 +33,7 @@ const AddNote = (props) => {
             name="title"
             value={note.title}
             onChange={onChange}
-            minLength={5}
+            minLength={3}
             required
           />
         </div>
@@ -66,7 +66,7 @@ const AddNote = (props) => {
           />
         </div>
         <button
-          disabled={note.title.length < 5 || note.description.length < 10}
+          disabled={note.title.length < 3 || note.description.length < 10}
           type="submit"
           className="btn btn-primary w-100"
           onClick={handleclick}
