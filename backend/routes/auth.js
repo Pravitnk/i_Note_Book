@@ -104,11 +104,18 @@ router.post(
       const data = {
         user: {
           id: user.id,
+          name: user.name,
         },
       };
       const authtoken = JWT.sign(data, JWT_SECRET);
       success = true;
-      res.json({ success, authtoken });
+        res.json({
+        success: true,
+        authtoken,
+        user: {
+          name: user.name, // Include user's name
+        },
+      });
     } catch (error) {
       console.log(error.message);
 return res
