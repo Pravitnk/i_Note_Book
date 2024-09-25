@@ -32,7 +32,10 @@ const AddNote = (props) => {
 
   return (
     <div className="container">
-      <h2> Add a note {userName && ` ${userName}`}</h2>
+      <h2>
+        Add a note
+        <span style={{ color: "blue" }}>{userName && ` ${userName}`}</span>
+      </h2>
       <div className="form">
         <div className="mb-3 row">
           <label htmlFor="title" className="col-sm-2 col-form-label">
